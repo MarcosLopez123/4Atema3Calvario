@@ -166,49 +166,7 @@ public class matriz extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public ArrayList <String>  Obtener()
-    {
-               int fila = jTable1.getRowCount();
-               int columna = jTable1.getColumnCount();
-              double matriz [][]= new double [fila][columna];
-              for (int i = 0; i<fila; i++)
-         {
-             for (int j =0; j<columna; j++)
-             {
-                 matriz[i][j]=Double.parseDouble(jTable1.getValueAt(i,j).toString());
-             }//segundo for
-         }//Primer for
-              
-              for (int i = 0; i<fila; i++)
-         {
-             for (int j =0; j<columna; j++)
-             {
-                // System.out.print( matriz[i][j] + "\t");
-             }//segundo for
-            // System.out.println("");
-         }//Primer for
-              
-              ArrayList <String> lista = new ArrayList<>();
-         cmatrices mat = new cmatrices();
-          double determinante =mat.determinanteMatriz(0, matriz);
-          
-          //System.out.println("La determinate es : " + determinante);
-          double [][] MatAdjunta=mat.Adjunta(matriz);
-          double [][] MatTrans=mat.Transpuesta(MatAdjunta);
-          //System.out.println("La inversa de la matriz es : ");
-          double res = 0;
-          for (int i =0; i<MatTrans.length;i++)
-          {
-               for (int j =0; j<MatTrans.length;j++){
-               lista.add(MatTrans[i][j]+ " / "+ determinante);
-                  
-               }
-               
-          }
-         
-             return lista;
-        
-    }
+    
         
     
     
@@ -222,49 +180,36 @@ public class matriz extends javax.swing.JFrame {
         jTable2.getTableHeader().setUI(null);
         model.setRowCount(f);
         model.setColumnCount(c);
-        String [][] m = new String [f][c];
+        
+        double matrizNormal [][]= new double [f][c];
          for (int i = 0; i<f; i++)
          {
              for (int j =0; j<c; j++)
              {
-                 m[i][j] =this.Obtener().toString();
+                 matrizNormal[i][j]=Double.parseDouble(jTable1.getValueAt(i,j).toString());
              }//segundo for
          }//Primer for
-         for (int i = 0; i<1; i++)
-         {
-             for (int j =0; j<1; j++)
-             {
-                 System.out.print(m[i][j] + "\t");
-             }//segundo for
-             System.out.println("");
-         }//Primer for
-         
-          for (int i = 0; i<m.length; i++)
-         {
-             for (int j =0; j<m.length; j++)
+        
+        //Obtenemos la matriz inversa
+        String [][] matrizInversa = new String [f][c];
+        CalcularInversa calcular=new CalcularInversa();
+        matrizInversa=calcular.Obtener(f, c, matrizNormal);
+      
+        //Asignamos los valores a la tablaInversa
+        for (int i = 0; i<matrizInversa.length; i++)
+        {
+             for (int j =0; j<matrizInversa.length; j++)
              {
                  //System.out.print(m[i][j] + "\t");
-                 jTable2.setValueAt(m[i][j], i, j);
+                 jTable2.setValueAt(matrizInversa[i][j], i, j);
                  
                  
              }//segundo for
              //System.out.println("");
-         }//Primer for
+        }//Primer for
          
          
-         /*
-        jTable2.getTableHeader().setUI(null);
-        model.setRowCount(f);
-        model.setColumnCount(c);
         
-         for (int i = 0; i<f; i++)
-         {
-             for (int j =0; j<c; j++)
-             {
-                 jTable2.setValueAt(m, i, j);
-             }//segundo for
-         }//Primer for
-        */
         
        
         
