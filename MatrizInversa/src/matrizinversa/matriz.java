@@ -7,8 +7,7 @@ package matrizinversa;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 
@@ -24,6 +23,7 @@ public class matriz extends javax.swing.JFrame {
      */
     public matriz() {
         initComponents();
+        this.btnCalcular.setEnabled(false);
     }
 
     /**
@@ -43,7 +43,7 @@ public class matriz extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnCalcular = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
@@ -78,11 +78,11 @@ public class matriz extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton2.setText("Calcular Inversa");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCalcular.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnCalcular.setText("Calcular Inversa");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCalcularActionPerformed(evt);
             }
         });
 
@@ -126,7 +126,7 @@ public class matriz extends javax.swing.JFrame {
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(403, 403, 403)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -147,7 +147,7 @@ public class matriz extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(99, Short.MAX_VALUE))
         );
 
@@ -158,11 +158,15 @@ public class matriz extends javax.swing.JFrame {
         // TODO add your handling code here:
         int f = Integer.parseInt(jTextField1.getText());
         int c = Integer.parseInt(jTextField2.getText());
-
-        int [][] matriz = new int [f][c];
+        if(f==c){
+            int [][] matriz = new int [f][c];
         
-        this.mostrarMatriz(matriz, f, c);
-       
+            this.mostrarMatriz(matriz, f, c);
+            this.btnCalcular.setEnabled(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "No es posible calcular la inversa.\nPor favor ingrese una matriz cuadrada");
+        }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -171,49 +175,62 @@ public class matriz extends javax.swing.JFrame {
     
     
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         // TODO add your handling code here:
-       
-        DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
-        int f = Integer.parseInt(jTextField1.getText());
-        int c = Integer.parseInt(jTextField2.getText());
-        jTable2.getTableHeader().setUI(null);
-        model.setRowCount(f);
-        model.setColumnCount(c);
-        
-        double matrizNormal [][]= new double [f][c];
-         for (int i = 0; i<f; i++)
-         {
-             for (int j =0; j<c; j++)
+       try{
+            boolean validacion=false;
+            int f = Integer.parseInt(jTextField1.getText());
+            int c = Integer.parseInt(jTextField2.getText());
+            
+            double matrizNormal [][]= new double [f][c];
+             for (int i = 0; i<f; i++)
              {
-                 matrizNormal[i][j]=Double.parseDouble(jTable1.getValueAt(i,j).toString());
-             }//segundo for
-         }//Primer for
-        
-        //Obtenemos la matriz inversa
-        String [][] matrizInversa = new String [f][c];
-        CalcularInversa calcular=new CalcularInversa();
-        matrizInversa=calcular.Obtener(f, c, matrizNormal);
-      
-        //Asignamos los valores a la tablaInversa
-        for (int i = 0; i<matrizInversa.length; i++)
-        {
-             for (int j =0; j<matrizInversa.length; j++)
-             {
-                 //System.out.print(m[i][j] + "\t");
-                 jTable2.setValueAt(matrizInversa[i][j], i, j);
-                 
-                 
-             }//segundo for
-             //System.out.println("");
-        }//Primer for
+                 for (int j =0; j<c; j++)
+                 {
+                     if (jTable1.getValueAt(i,j).toString()==null){
+                         //validacion=true;
+                     }else{
+                         matrizNormal[i][j]=Double.parseDouble(jTable1.getValueAt(i,j).toString());
+
+                     }
+                 }//segundo for
+             }//Primer for
+             
+             if(!validacion){
+                    DefaultTableModel model = (DefaultTableModel)jTable2.getModel();
+                    jTable2.getTableHeader().setUI(null);
+                    model.setColumnCount(c);
+                    model.setRowCount(f);
+             }
+
+            //Obtenemos la matriz inversa
+            String [][] matrizInversa = new String [f][c];
+            CalcularInversa calcular=new CalcularInversa();
+            matrizInversa=calcular.Obtener(f, c, matrizNormal);
+
+            //Asignamos los valores a la tablaInversa
+            for (int i = 0; i<matrizInversa.length; i++)
+            {
+                 for (int j =0; j<matrizInversa.length; j++)
+                 {
+                     //System.out.print(m[i][j] + "\t");
+                     jTable2.setValueAt(matrizInversa[i][j], i, j);
+
+
+                 }//segundo for
+                 //System.out.println("");
+            }//Primer for
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(null, "No se permite campos vacios.\nIngrese los valores faltantes");
+           jTable2.setVisible(false);
+       }
          
          
         
         
        
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,7 +277,7 @@ public class matriz extends javax.swing.JFrame {
          {
              for (int j =0; j<c; j++)
              {
-                 jTable1.setValueAt(matriz [i][j], i, j);
+                 jTable1.setValueAt(null, i, j);
              }//segundo for
          }//Primer for
         
@@ -269,8 +286,8 @@ public class matriz extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCalcular;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

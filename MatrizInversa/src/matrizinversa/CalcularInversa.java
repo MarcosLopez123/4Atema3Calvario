@@ -24,14 +24,21 @@ public class CalcularInversa {
           for (int i =0; i<MatTrans.length;i++)
           {
                for (int j =0; j<MatTrans.length;j++){
-                    if(MatTrans[i][j]<0 && determinante<0){
+                   if(Math.abs(determinante)==1 && MatTrans[i][j]!=0){
+                            double division=MatTrans[i][j]/determinante;
+                            Inversa[i][j]=String.valueOf(division);
+                    }else if(Math.abs(MatTrans[i][j])==Math.abs(determinante)){
+                            double division=MatTrans[i][j]/determinante;
+                            Inversa[i][j]=String.valueOf(division);
+                    }else if(MatTrans[i][j]<0 && determinante<0){
                          Inversa[i][j]=(Math.abs(MatTrans[i][j])+ " / "+ Math.abs(determinante));
                     }
                     else if(MatTrans[i][j]>0 && determinante<0){
                          Inversa[i][j]=(-(MatTrans[i][j])+ " / "+ Math.abs(determinante));
                     }else if((MatTrans[i][j]==0 && determinante!=0) || (MatTrans[i][j]==0 && determinante==0)){
                         Inversa[i][j]=("0");
-                    }else
+                    }
+                    else
                          Inversa[i][j]=(MatTrans[i][j]+ " / "+determinante);
                }
                
