@@ -207,7 +207,7 @@ public class matriz extends javax.swing.JFrame {
             String [][] matrizInversa = new String [f][c];
             CalcularInversa calcular=new CalcularInversa();
             matrizInversa=calcular.Obtener(f, c, matrizNormal);
-
+            
             //Asignamos los valores a la tablaInversa
             for (int i = 0; i<matrizInversa.length; i++)
             {

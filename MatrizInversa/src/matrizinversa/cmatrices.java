@@ -14,9 +14,9 @@ public class cmatrices {
     //le hacemos llegar nuestra matriz y especificamos la fila de la matriz
     public double determinanteMatriz (int i, double [][] matriz)
     {       // el primer if es por si es una matriz de 2 x 2
-    	   if (matriz.length==2)
+    	if (matriz.length==2)
         {
-        	double deter = matriz[0][0]*matriz[1][1] - matriz[0][1]*matriz[1][0];
+                double deter = matriz[0][0]*matriz[1][1] - matriz[0][1]*matriz[1][0];
         	return deter;
         	
         }
@@ -63,16 +63,37 @@ public class cmatrices {
     // método para la adjunta
     public double [][] Adjunta(double[][] matriz){
         double [][]tempAdjunta = new double [matriz.length][matriz.length];
-        for(int i = 0; i <tempAdjunta.length;i++)
-        {
-            for (int j =0; j < tempAdjunta.length;j++)
+        if(tempAdjunta.length == 2){ 
+            double adjunta = matriz[0][0];
+            for(int i = 0; i <tempAdjunta.length;i++)
             {
-                //Método submatriz
-                double [][] temp = this.MatrizNueva(i, j, matriz);
-                double adjunta=(double) (Math.pow(-1, i+j)* this.determinanteMatriz(0, temp));
-                tempAdjunta[i][j]=adjunta;
-            }//for2
-        }//for1
+                for (int j =0; j < tempAdjunta.length;j++)
+                {//Método submatriz
+                    if((i == 0 && j==0)){
+                        tempAdjunta[i][j]=matriz[1][1];
+                    }
+                    if((i == 0 && j==1) || (i == 1 && j==0)) {
+                        tempAdjunta[i][j]=matriz[i][j]*-1;
+                    }
+                    if ((i == 1 && j==1)){
+                            tempAdjunta[i][j]=adjunta;
+                    }
+                    
+                }//for2
+            }//for1         
+        } else
+        {
+            for(int i = 0; i <tempAdjunta.length;i++)
+            {
+                for (int j =0; j < tempAdjunta.length;j++)
+                {
+                    //Método submatriz
+                    double [][] temp = this.MatrizNueva(i, j, matriz);
+                    double adjunta=(double) (Math.pow(-1, i+j)* this.determinanteMatriz(0, temp));
+                    tempAdjunta[i][j]=adjunta;
+                }//for2
+            }//for1
+        }     
         return tempAdjunta;
     }
     //método para la transpuesta
