@@ -25,31 +25,27 @@ public class CalcularInversa {
           {
                for (int j =0; j<MatTrans.length;j++){
                    if(MatAdjunta.length==2){
-                       double division=MatAdjunta[i][j]/determinante;
-                       Inversa[i][j]=String.valueOf(division);
-                       Inversa[i][j]=String.valueOf(division);
-                       
-                   } else if(Math.abs(determinante)==1 && MatTrans[i][j]!=0){
+                       Inversa[i][j]=(MatAdjunta[i][j]+ " / " + determinante);
+                   } 
+                   if((MatAdjunta.length!=2)&& (Math.abs(determinante)==1 && MatTrans[i][j]!=0)){
                             double division=MatTrans[i][j]/determinante;
                             Inversa[i][j]=String.valueOf(division);
-                    }else if(Math.abs(MatTrans[i][j])==Math.abs(determinante)){
+                    }else if((MatAdjunta.length!=2)&& (Math.abs(MatTrans[i][j])==Math.abs(determinante))){
                             double division=MatTrans[i][j]/determinante;
                             Inversa[i][j]=String.valueOf(division);
-                    }else if(MatTrans[i][j]<0 && determinante<0){
+                    }else if((MatAdjunta.length!=2)&& (MatTrans[i][j]<0 && determinante<0)){
                          Inversa[i][j]=(Math.abs(MatTrans[i][j])+ " / "+ Math.abs(determinante));
                     }
-                    else if(MatTrans[i][j]>0 && determinante<0){
+                    else if((MatAdjunta.length!=2)&& (MatTrans[i][j]>0 && determinante<0)){
                          Inversa[i][j]=(-(MatTrans[i][j])+ " / "+ Math.abs(determinante));
                     }else if((MatAdjunta.length!=2) && ((MatTrans[i][j]==0 && determinante!=0) || (MatTrans[i][j]==0 && determinante==0))){
                         Inversa[i][j]=("0");
-                    } else if(MatAdjunta.length==2){
-                         Inversa[i][j]=(MatAdjunta[i][j]+ " / "+determinante);
-                    }else
+                    } else{
                          Inversa[i][j]=(MatTrans[i][j]+ " / "+determinante);
+                    }
                }
                
-          }
-         
+          }         
              return Inversa;
         
     }
