@@ -199,15 +199,22 @@ public class matriz extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int f = Integer.parseInt(jTextField1.getText());
-        int c = Integer.parseInt(jTextField2.getText());
-        if(f==c){
-            int [][] matriz = new int [f][c];
+        if (jTextField1.getText().equals("")&& jTextField2.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Campos vacios ingrese el numero\nde filas y columnas");
+        } else 
+        {
         
+         int f = Integer.parseInt(jTextField1.getText());
+         int c = Integer.parseInt(jTextField2.getText());  
+            if(f==c){
+            int [][] matriz = new int [f][c];
             this.mostrarMatriz(matriz, f, c);
             this.btnCalcular.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(null, "No es posible calcular la inversa.\nPor favor ingrese una matriz cuadrada");
+        }
+        
         }
         
         
